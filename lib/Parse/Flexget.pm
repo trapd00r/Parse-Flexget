@@ -1,5 +1,7 @@
+#!/usr/bin/perL
 package Parse::Flexget;
 
+our $VERSION = '0.002';
 require Exporter;
 @ISA = qw(Exporter);
 our @EXPORT = qw(flexparse);
@@ -9,10 +11,13 @@ use strict;
 sub flexparse {
   my @data;
   if(ref($_[0]) eq 'ARRAY') {
-    push(@data, @{$_});
+    push(@data, @{$_[0]});
+  }
+  elsif(ref($_[0]) eq '') {
+    push(@data, @_);
   }
   else {
-    push(@data, @_);
+    croak("Reference type " . ref($_[0]) . " not supported\n");
   }
 
   my @downloads;
@@ -36,19 +41,24 @@ Parse::Flexget - Parse the flexget program output
 
     ...
 
-    print "$_\n" for flexparse(@logfile);
+    print "$_\n" for flexparse(@data);
 
 =head1 DESCRIPTION
 
-Parse::Flexget parses the output from flexget and returns a list of downloaded files.
+Parse::Flexget parses the output from flexget and returns a list
+of successfully downloaded files.
 
 =head1 EXPORTS
 
 =head2 flexparse()
 
-Parameters: @content, \@content
+Parameters: $content, @content, \@content
 
 Returns:    @downloads
+
+In list context, returns an array with all files downloaded by flexget.
+
+In scalar context, returns the number of files downloaded by flexget.
 
 =head1 AUTHOR
 
