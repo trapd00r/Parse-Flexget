@@ -1,12 +1,20 @@
-#!/usr/bin/perL
 package Parse::Flexget;
-
-our $VERSION = '0.002';
-require Exporter;
-@ISA = qw(Exporter);
-our @EXPORT = qw(flexparse);
-
 use strict;
+
+BEGIN {
+  use Exporter;
+  use vars qw($VERSION @ISA @EXPORT_OK);
+
+  $VERSION = '0.012';
+  @ISA     = qw(Exporter);
+
+  @EXPORT_OK = qw(
+    flexparse
+  );
+
+}
+
+use Carp qw(croak);
 
 sub flexparse {
   my @data;
@@ -29,6 +37,11 @@ sub flexparse {
   return wantarray() ? @downloads : scalar(@downloads);
 }
 
+
+1;
+
+__END__
+
 =pod
 
 =head1 NAME
@@ -37,7 +50,7 @@ Parse::Flexget - Parse the flexget program output
 
 =head1 SYNOPSIS
 
-    use Parse::Flexget;
+    use Parse::Flexget qw(flexparse);
 
     ...
 
@@ -45,20 +58,31 @@ Parse::Flexget - Parse the flexget program output
 
 =head1 DESCRIPTION
 
-Parse::Flexget parses the output from flexget and returns a list
-of successfully downloaded files.
+B<Parse::Flexget> parses the output from flexget(1) and returns a list of
+successfully downloaded files.
+This module was initially written to be used together with L<File::Media::Sort>
+and L<File::PatternMatch>.
 
 =head1 EXPORTS
 
+None by default.
+
+
+=head1 FUNCTIONS
+
 =head2 flexparse()
 
-Parameters: $content, @content, \@content
+Parameters: @content | \@content
 
 Returns:    @downloads
 
 In list context, returns an array with all files downloaded by flexget.
 
 In scalar context, returns the number of files downloaded by flexget.
+
+=head1 SEE ALSO
+
+L<File::Media::Sort>, L<File::PatternMatch>, L<flexget(1)>
 
 =head1 AUTHOR
 
@@ -67,17 +91,18 @@ In scalar context, returns the number of files downloaded by flexget.
   magnus@trapd00r.se
   http://japh.se
 
-=head1 REPORTING BUGS
+=head1 CONTRIBUTORS
 
-Report bugs on rt.cpan.org or to magnus@trapd00r.se
+None required yet.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2010 Magnus Woldrich. All right reserved.
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
+Copyright 2010, 2011 the Parse::Flexgets L</AUTHOR> and L</CONTRIBUTORS> as
+listed above.
+
+=head1 LICENSE
+
+This library is free software; you may redistribute it and/or modify it under
+the same terms as Perl itself.
 
 =cut
-
-
-1;
