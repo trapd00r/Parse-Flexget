@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use Test::More tests => 1;
 
-use Parse::Flexget;
+use Parse::Flexget qw(flexparse);
 
 my @downloads = flexparse(<DATA>);
 is(
