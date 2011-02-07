@@ -5,13 +5,12 @@ BEGIN {
   use Exporter;
   use vars qw($VERSION @ISA @EXPORT_OK);
 
-  $VERSION = '0.012';
+  $VERSION = '0.014';
   @ISA     = qw(Exporter);
 
   @EXPORT_OK = qw(
     flexparse
   );
-
 }
 
 use Carp qw(croak);
@@ -52,7 +51,9 @@ Parse::Flexget - Parse the flexget program output
 
     use Parse::Flexget qw(flexparse);
 
-    ...
+    open(my $fh, '<', "$ENV{HOME}/.flexget.log") or die($!);
+    my @data = <$fh>;
+    close($fh);
 
     print "$_\n" for flexparse(@data);
 
@@ -66,7 +67,6 @@ and L<File::PatternMatch>.
 =head1 EXPORTS
 
 None by default.
-
 
 =head1 FUNCTIONS
 
@@ -97,7 +97,7 @@ None required yet.
 
 =head1 COPYRIGHT
 
-Copyright 2010, 2011 the Parse::Flexgets L</AUTHOR> and L</CONTRIBUTORS> as
+Copyright 2010, 2011 the B<Parse::Flexget>s L</AUTHOR> and L</CONTRIBUTORS> as
 listed above.
 
 =head1 LICENSE
